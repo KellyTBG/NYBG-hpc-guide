@@ -159,13 +159,13 @@ Miniconda
 ├── download_tools
 │   └── lftp
 │
-├── Environmental 2
+├── Environment 2
 │   └── assembly software
 │
-├── Environmental 3
+├── Environment 3
 │   └── quality-control software
 │
-└── Environmental 4
+└── Environment 4
     └── analyses software
 ```
 
@@ -177,7 +177,7 @@ An environment can be activated when its tools are required:
 
 The environment remains stored in the user's Conda area after logging out of the cluster. It does not need to be recreated every time a new session is opened.
 
-### 4.1. `.bashrc` versus a Conda environment
+### 4.1. `.bashrc` vs Conda environment
 
 The main difference is their **scope and purpose**. `.bashrc` prepares the general shell environment. A Conda environment provides an isolated collection of software for a particular workflow.
 
