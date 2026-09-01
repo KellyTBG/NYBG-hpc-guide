@@ -14,11 +14,11 @@ The login or head node is the point of entry to the cluster. It is used for task
 
 Computationally intensive analyses should generally not be run directly on the login node. Instead, they are submitted to compute nodes through the SLURM workload manager.
 
-### 1.1 Login
+### 1.1. Login
 
 The main entry point for institutional resources is: https://nybg.sharepoint.com/ From there, users can access internal documentation, credentials-related information, and other NYBG resources associated with their account. For example my access: ```ssh <username>@<cluster-address>``` 
 
-### 2.2 Compute nodes
+### 1.2. Compute nodes
 
 General information about the available partitions and their status can be obtained with: ```bash sinfo```
 
@@ -49,7 +49,7 @@ HPC cluster
     └── scratch / project space
 ```
 
-### SLURM
+### 1.3. SLURM
 
 SLURM manages the allocation of computational resources, including CPUs, memory, nodes, partitions, and running jobs. The SLURM module is loaded with:
 
@@ -61,7 +61,7 @@ To inspect the jobs associated with the current user: ```bash squeue -u $USER```
 
 The file: ```bash ~/.bashrc ``` is a Bash shell configuration file associated with the user's account. It is fundamentally different from a Conda environment. A Conda environment isolates software for a particular workflow, whereas `.bashrc` defines settings and commands that should be available as part of the user's **general shell execution environment**.
 
-### 2.1 What is `~/.bashrc`?
+### 2.1. What is `~/.bashrc`?
 
 The symbol: ```bash ~``` represents the user's home directory. Therefore: ```bash ~/.bashrc``` refers to the `.bashrc` file located in the user's home directory, regardless of the current working directory. For example, it remains the same file whether the user is currently working in the home directory, a project directory, or scratch space.
 
@@ -85,7 +85,7 @@ For example: ```bash module load shared``` loads a general software collection o
 
 Some programs are only accessible after another module has first been loaded.
 
-### 3.1 Searching for software
+### 3.1. Searching for software
 
 To search the full module tree: ```bash module spider <software-name>```
 
@@ -93,7 +93,7 @@ For example: ```bash module spider lftp``` or: ```bash module spider conda ```
 
 `module spider` is particularly useful because it can identify software that is not directly visible with `module avail` and can show which prerequisite modules must be loaded first.
 
-### 3.2 Example: Accessing software for raw-data download
+### 3.2. Example: Accessing software for raw-data download
 
 As an example, the sequencing provider recommended using `lftp` to download the raw sequencing data.
 
@@ -112,7 +112,7 @@ The search returned no available module.
 
 However, Miniconda was available: ```bash module spider conda```
 
--Miniconda is a lightweight distribution of Conda that provides the conda package and environment manager without installing a large collection of preconfigured software. It is commonly used to create isolated software environments for different bioinformatics workflows. https://www.anaconda.com/docs/getting-started/concepts/anaconda-or-miniconda?
+- Miniconda is a lightweight distribution of Conda that provides the conda package and environment manager without installing a large collection of preconfigured software. It is commonly used to create isolated software environments for different bioinformatics workflows. https://www.anaconda.com/docs/getting-started/concepts/anaconda-or-miniconda?
 
 The cluster indicated that the `shared` module had to be loaded before Miniconda: 
 
@@ -159,14 +159,14 @@ Miniconda
 ├── download_tools
 │   └── lftp
 │
-├── genome_assembly (example)
-│   └── genome-assembly software
+├── Environmental 2
+│   └── assembly software
 │
-├── assembly_qc (example)
+├── Environmental 3
 │   └── quality-control software
 │
-└── hic (example)
-    └── Hi-C software
+└── Environmental 4
+    └── analyses software
 ```
 
 Different environments can contain different programs, dependencies, or versions of the same program without interfering with one another. This is particularly important in bioinformatics, where different analytical tools may depend on incompatible versions of Python, libraries, compilers, or other software. For this reason, Conda environments should generally be used for **workflow-specific or analysis-specific software**.
@@ -177,8 +177,7 @@ An environment can be activated when its tools are required:
 
 The environment remains stored in the user's Conda area after logging out of the cluster. It does not need to be recreated every time a new session is opened.
 
-
-### 4.1 `.bashrc` versus a Conda environment
+### 4.1. `.bashrc` versus a Conda environment
 
 The main difference is their **scope and purpose**. `.bashrc` prepares the general shell environment. A Conda environment provides an isolated collection of software for a particular workflow.
 
@@ -205,7 +204,7 @@ User opens a cluster session
 
 Anything loaded through `.bashrc` becomes part of the general shell environment whenever a new session starts. A Conda environment, in contrast, can be activated only when required and keeps its software and dependencies separated from other environments.
 
-### 4.2 What should go in `.bashrc`?
+### 4.2. What should go in `.bashrc`?
 
 The `.bashrc` file should remain relatively minimal and contain settings or infrastructure that are broadly useful across cluster sessions.
 
@@ -228,7 +227,7 @@ module load miniconda/26.5.3-2
 
 These commands prepare the general execution environment without determining which project-specific analytical software is active.
 
-### 4.3 What should not normally go in `.bashrc`?
+### 4.3. What should not normally go in `.bashrc`?
 
 Project-specific software and Conda environments should generally **not** be activated automatically through `.bashrc`.
 
