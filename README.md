@@ -156,7 +156,7 @@ The structure can be conceptualised as:
 ```
 Miniconda
 │
-├── download_tools
+├── download_tools (Environment 1)
 │   └── lftp
 │
 ├── Environment 2
@@ -196,10 +196,10 @@ User opens a cluster session
                 ▼
         Conda environments
                 │
-                ├── download_tools
-                ├── genome_assembly
-                ├── assembly_qc
-                └── hic
+                ├── download_tools (Environment 1)
+                ├── Environment 2
+                ├── Environment 3
+                └── Environment 4
 ```
 
 Anything loaded through `.bashrc` becomes part of the general shell environment whenever a new session starts. A Conda environment, in contrast, can be activated only when required and keeps its software and dependencies separated from other environments.
