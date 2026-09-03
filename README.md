@@ -259,4 +259,4 @@ when downloading raw sequencing data, and later:
 
 ```bash conda activate genome_assembly```
 
-# 1. JOB SUBMISSION (COMMING SOON)
+# 2. JOB SUBMISSION (COMMING SOON)
