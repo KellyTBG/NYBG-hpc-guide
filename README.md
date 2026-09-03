@@ -4,9 +4,9 @@ By Kelly T. Bocanegra-González September 2026
 
 This section documents how the NYBG HPC cluster is organised, how computational resources are managed, how software is accessed through modules, and how persistent shell configuration differs from project-specific software environments.
 
-It is intended as a practical reference to make routine use of the cluster easier for members of the Bedoya Lab, particularly when setting up software environments, accessing computational resources, and running bioinformatics workflows in a consistent and reproducible way.
+It is intended as a practical reference to make routine use of the cluster easier for NYBG users, particularly when setting up software environments, accessing computational resources, and running bioinformatics workflows in a consistent and reproducible way.
 
-## 1. CLUSTER ARCHITECTURE
+# 1. CLUSTER ARCHITECTURE
 
 The NYBG HPC cluster is a shared computing system composed of a login environment, compute nodes, storage areas, and a workload manager.
 
@@ -14,11 +14,11 @@ The login or head node is the point of entry to the cluster. It is used for task
 
 Computationally intensive analyses should generally not be run directly on the login node. Instead, they are submitted to compute nodes through the SLURM workload manager.
 
-### 1.1. Login
+## 1.1. Login
 
 The main entry point for institutional resources is: https://nybg.sharepoint.com/ From there, users can access internal documentation, credentials-related information, and other NYBG resources associated with their account. For example my access: ```ssh <username>@<cluster-address>``` 
 
-### 1.2. Compute nodes
+## 1.2. Compute nodes
 
 General information about the available partitions and their status can be obtained with: ```bash sinfo```
 
@@ -49,7 +49,7 @@ HPC cluster
     └── scratch / project space
 ```
 
-### 1.3. SLURM
+## 1.3. SLURM
 
 SLURM manages the allocation of computational resources, including CPUs, memory, nodes, partitions, and running jobs. The SLURM module is loaded with:
 
@@ -57,11 +57,11 @@ SLURM manages the allocation of computational resources, including CPUs, memory,
 
 To inspect the jobs associated with the current user: ```bash squeue -u $USER```
 
-## 2. SHELL ENRIRONMENT: ~/.bashrc
+## 1.4. Shell environment: ~/.bashrc
 
 The file: ```bash ~/.bashrc ``` is a Bash shell configuration file associated with the user's account. It is fundamentally different from a Conda environment. A Conda environment isolates software for a particular workflow, whereas `.bashrc` defines settings and commands that should be available as part of the user's **general shell execution environment**.
 
-### 2.1. What is `~/.bashrc`?
+### 1.4.1. Location and behaviour of `~/.bashrc`
 
 The symbol: ```bash ~``` represents the user's home directory. Therefore: ```bash ~/.bashrc``` refers to the `.bashrc` file located in the user's home directory, regardless of the current working directory. For example, it remains the same file whether the user is currently working in the home directory, a project directory, or scratch space.
 
@@ -77,7 +77,7 @@ Adding these commands to `.bashrc` means that they do not need to be loaded manu
 
 `source ~/.bashrc` re-executes the commands contained in `.bashrc` in the current shell. It therefore allows changes to take effect without logging out and starting a new session.
 
-## 3. SOFTWARE ACCESS THROUGH MODULES
+## 1.6. Software access through modules
 
 Software installed centrally on the cluster is commonly accessed through the **Lmod module system**. A module does not normally install a new copy of the software into the user's directory. Instead, loading a module modifies the current shell environment so that the corresponding program and its dependencies become accessible.
 
@@ -85,7 +85,7 @@ For example: ```bash module load shared``` loads a general software collection o
 
 Some programs are only accessible after another module has first been loaded.
 
-### 3.1. Searching for software
+### 1.6.1. Searching for software
 
 To search the full module tree: ```bash module spider <software-name>```
 
@@ -93,7 +93,7 @@ For example: ```bash module spider lftp``` or: ```bash module spider conda ```
 
 `module spider` is particularly useful because it can identify software that is not directly visible with `module avail` and can show which prerequisite modules must be loaded first.
 
-### 3.2. Example: Accessing software for raw-data download
+### 1.6.2. Example: Accessing software for raw-data download
 
 As an example, the sequencing provider recommended using `lftp` to download the raw sequencing data.
 
@@ -145,7 +145,7 @@ Here:
 
 ---
 
-## 4. SOFTWARE ENVIRONMENTS
+## 1.7 Software environments
 
 A Conda environment is an isolated software environment containing a defined set of programs and their dependencies. The main purpose of an environment is to keep software required for one workflow separated from software required for another workflow. For example, an environment dedicated to downloading sequencing data can be created with:
 
@@ -177,7 +177,7 @@ An environment can be activated when its tools are required:
 
 The environment remains stored in the user's Conda area after logging out of the cluster. It does not need to be recreated every time a new session is opened.
 
-### 4.1. `.bashrc` vs Conda environment
+### 1.7.1. `.bashrc` vs Conda environment
 
 The main difference is their **scope and purpose**. `.bashrc` prepares the general shell environment. A Conda environment provides an isolated collection of software for a particular workflow.
 
@@ -204,7 +204,7 @@ User opens a cluster session
 
 Anything loaded through `.bashrc` becomes part of the general shell environment whenever a new session starts. A Conda environment, in contrast, can be activated only when required and keeps its software and dependencies separated from other environments.
 
-### 4.2. What should go in `.bashrc`?
+### 1.7.2. What should go in `.bashrc`?
 
 The `.bashrc` file should remain relatively minimal and contain settings or infrastructure that are broadly useful across cluster sessions.
 
@@ -227,7 +227,7 @@ module load miniconda/26.5.3-2
 
 These commands prepare the general execution environment without determining which project-specific analytical software is active.
 
-### 4.3. What should not normally go in `.bashrc`?
+### 1.7.3. What should NOT normally go in `.bashrc`?
 
 Project-specific software and Conda environments should generally **not** be activated automatically through `.bashrc`.
 
@@ -258,3 +258,5 @@ For example: ```bash conda activate download_tools```
 when downloading raw sequencing data, and later:
 
 ```bash conda activate genome_assembly```
+
+# 1. JOB SUBMISSION (COMMING SOON)
